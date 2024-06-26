@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.AxHost;
 using static System.Windows.Forms.LinkLabel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SmartBot
 {
@@ -207,6 +208,7 @@ namespace SmartBot
    //             return false;
 			//chrome.MouseClick(xy_cor_click[0], xy_cor_click[1]);
 			chrome.NavigateTo("https://www.tiktok.com/tiktokstudio/upload?from=upload");
+            Thread.Sleep(5000);
             var classwall = "jsx-3309220042";
             var xy_cor_click = chrome.GetCenterEle($"document.getElementsByClassName('{classwall}')[0].getBoundingClientRect().toJSON()");
             Thread.Sleep(1000);
@@ -214,8 +216,8 @@ namespace SmartBot
             {
                 chrome.MouseClick(xy_cor_click[0], xy_cor_click[1]);
             }
-                Thread.Sleep(3000);
-            string path = "D:\\Private\\Demo Tiktok\\tiktok1.mp4";
+            Thread.Sleep(3000);
+            string path = "D:\\Tiktok\\Video\\tiktok-next- back- tha tim.mp4";
 			if (path != null)
 			{
 				string pathAnh = path.Trim();
@@ -223,22 +225,38 @@ namespace SmartBot
 				{
                     chrome.PressEnter();
 					await Task.Delay(1000);
-					var xy_cor = chrome.GetCenterEle("document.getElementById('jsx-3309220042 upload-stage-btn')");
-					 await Task.Delay(1000);
+
 					StringBuilder pathIMG = new StringBuilder(pathAnh);
-					chrome.MouseClick(xy_cor[0] - xy_cor[1], xy_cor[1] * 2);
+
 					await Task.Delay(3000);
 					await Task.Run(() => SendIMG(pathIMG));
-					await Task.Delay(3000);
-				}
-			}
-			await Task.Delay(3000);
-			var xy_cor_click2 = chrome.GetCenterEle("document.getElementsByClassName('TUXButton TUXButton--default TUXButton--large TUXButton--primary')[0].getBoundingClientRect().toJSON()");
-			Thread.Sleep(1000);
+                    await Task.Delay(3000);
+                }
+            }
+			await Task.Delay(5000);
+            var post = "jsx-2745626608 button-group";
+            var svgcmtBox = chrome.GetCenterEle($"document.getElementsByClassName('{post}')[0]" +
+                            ".getBoundingClientRect().toJSON()");
+            chrome.PressDown();
+            chrome.PressDown();
+            chrome.PressDown();
+
+            await Task.Delay(2000);
+
+            var button = "TUXButton TUXButton--default TUXButton--large TUXButton--primary";
+			var xy_cor_click2 = chrome.GetCenterEle($"document.getElementsByClassName('{button}')[0].getBoundingClientRect().toJSON()");
+
+            Thread.Sleep(1000);
 			if (xy_cor_click2 == null)
 				return false;
 			chrome.MouseClick(xy_cor_click2[0], xy_cor_click2[1]);
-			return true;
+            Thread.Sleep(3000);
+
+            var uploadC = "TUXButton TUXButton--default TUXButton--medium TUXButton--primary";
+            var uploadB = chrome.GetCenterEle($"document.getElementsByClassName('{uploadC}')[0].getBoundingClientRect().toJSON()");
+            Thread.Sleep(1000);
+            chrome.MouseClick(uploadB[0], uploadB[1]);
+            return true;
 		}
 		public async Task<bool> TiktokLike()
 		{
